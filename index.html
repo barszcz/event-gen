@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Event CSV Generator!</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="description" content="" />
+        <link rel="icon" href="favicon.png" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css"
+        />
+        <script src="//unpkg.com/alpinejs" defer></script>
+    </head>
+
+    <body>
+        <h1>Event CSV Generator!!!</h1>
+        <h2>Instructions</h2>
+        <ol>
+            <li>
+                Enter the date range you want to generate events for (start and
+                end dates are both inclusive).
+            </li>
+            <li>
+                Check boxes for the days of the week you want to generate events
+                for.
+            </li>
+            <li>
+                For each day of the week, enter start and end times for your
+                event.
+            </li>
+            <li>
+                For each day of the week, add location information. If you leave
+                these fields blank, I'll use the default location information
+                set below.
+            </li>
+            <li>
+                Set the base event title and admin title. Use
+                <code>{date}</code> (e.g. February 27) or
+                <code>{shortdate}</code> (e.g. 2/27) to insert the date for that
+                event into the title, or <code>{weekday}</code> to get the day
+                of the week.
+            </li>
+            <li>Add default location information, if you want it.</li>
+            <li>
+                Add sponsor info. This should probably be the URL for your
+                campaign's AN group.
+            </li>
+            <li>
+                Add a default attendee pitch (i.e. description of the event).
+                You can use the curly-brace tags mentioned above to insert date
+                information. NOTE that AN expects HTML in this field, so if you
+                want line breaks in your descriptions, you'll have to add them
+                with <code>&lt;br/&gt;</code> tags.
+            </li>
+            <li>
+                Add default attendee instructions (i.e. what RSVPs see after
+                signing up). Same goes here as for attendee pitch.
+            </li>
+        </ol>
+        <form action="/create" method="POST">
+            <label for="date_range_start"> Date Range Start </label>
+            <input type="date" name="date_range_start" id="date_range_start" />
+            <label for="date_range_end"> Date Range End </label>
+            <input type="date" name="date_range_end" id="date_range_end" />
+            <div
+                x-data="{days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']}"
+            >
+                <template x-for="day in days">
+                    <div x-data="{checked: false}">
+                        <label :for="day" x-text="day"></label>
+                        <input
+                            type="checkbox"
+                            :id="day"
+                            :name="day"
+                            x-model="checked"
+                        />
+                        <div
+                            x-show="checked"
+                            x-data="{f(name) { return `${name}__${day}` }, startTime:`start_time__${day}`, endTime:`end_time__${day}`}"
+                            x-transition
+                        >
+                            <label :for="f('start_time')">Start Time</label>
+                            <input
+                                type="time"
+                                :name="f('start_time')"
+                                :id="'f('start_time')"
+                            />
+                            <label :for="f('end_time')">End Time</label>
+                            <input
+                                type="time"
+                                :name="f('end_time')"
+                                :id="f('end_time')"
+                            />
+                            <label :for="f('location_name')">
+                                Location Name
+                            </label>
+                            <input
+                                type="text"
+                                :name="f('location_name')"
+                                :id="f('location_name')"
+                            />
+                            <label :for="f('address')"> Address </label>
+                            <input
+                                type="text"
+                                :name="f('address')"
+                                :id="f('address')"
+                            />
+                            <label :for="f('city')"> City </label>
+                            <input
+                                type="text"
+                                :name="f('city')"
+                                :id="f('city')"
+                            />
+                            <label :for="f('state')"> State </label>
+                            <input
+                                type="text"
+                                :name="f('state')"
+                                :id="f('state')"
+                            />
+                            <label :for="f('zip')"> Zip </label>
+                            <input
+                                type="text"
+                                :name="f('zip')"
+                                :id="f('zip')"
+                            />
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <label for="event_title"> Event Title </label>
+            <input
+                type="text"
+                name="event_title"
+                id="event_title"
+                placeholder="{date} Canvass for Eon!"
+            />
+            <label for="admin_title"> Event Administrative Title </label>
+            <input
+                type="text"
+                name="administrative_title"
+                id="administrative_title"
+                placeholder="{shortdate} Canvass"
+            />
+            <label for="location_name"> Location Name </label>
+            <input type="text" name="location_name" id="location_name" />
+            <label for="address"> Address </label>
+            <input type="text" name="address" id="address" />
+            <label for="city"> City </label>
+            <input type="text" name="city" id="city" />
+            <label for="state"> State </label>
+            <input type="text" name="state" id="state" />
+            <label for="zip"> Zip </label>
+            <input type="text" name="zip" id="zip" />
+            <label for="host"> Host </label>
+            <input type="text" name="host" id="host" />
+            <label for="sponsor"> Sponsor </label>
+            <input type="text" name="sponsor" id="sponsor" />
+            <label for="attendee_pitch"> Attendee Pitch </label>
+            <textarea name="attendee_pitch" id="attendee_pitch"> </textarea>
+            <label for="attendee_instructions"> Attendee Instructions </label>
+            <textarea name="attendee_instructions" id="attendee_instructions">
+            </textarea>
+            <button>lol yolo</button>
+        </form>
+    </body>
+</html>
