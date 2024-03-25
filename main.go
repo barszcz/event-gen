@@ -118,7 +118,7 @@ func main() {
 
 			var row CSVRow
 			row.EventTitle = interpolationReplacer.Replace(r.PostFormValue("event_title"))
-			row.AdministrativeTitle = interpolationReplacer.Replace("administrative_title")
+			row.AdministrativeTitle = interpolationReplacer.Replace(r.PostFormValue("administrative_title"))
 			row.LocationName = getValueForWeekday("location_name")
 			row.Address = getValueForWeekday("address")
 			row.City = getValueForWeekday("city")
