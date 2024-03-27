@@ -18,7 +18,7 @@ type Date struct {
 }
 
 func (d *Date) MarshalCSV() (string, error) {
-	return d.Format("2006/02/01"), nil
+	return d.Format("01/02/2006"), nil
 }
 
 type Time struct {
