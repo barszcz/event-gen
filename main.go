@@ -36,8 +36,8 @@ type CSVRow struct {
 	Address              string `csv:"address"`
 	City                 string `csv:"city"`
 	State                string `csv:"state"`
-	Zip                  string `csv:"state"`
-	Country              string `csv:"state"`
+	Zip                  string `csv:"zip"`
+	Country              string `csv:"country"`
 	Time                 Time   `csv:"time"`
 	Date                 Date   `csv:"date"`
 	Host                 string `csv:"host"`
